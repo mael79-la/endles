@@ -1,0 +1,192 @@
+/* =============================================
+   style.css — Train Runner 🚂
+   Night City / Neon theme
+   ============================================= */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --neon:   #00ffff;
+  --neon2:  #ff00cc;
+  --bg:     #05050f;
+  --panel:  rgba(5, 5, 25, 0.85);
+  --border: rgba(0, 255, 255, 0.35);
+  --dim:    rgba(255,255,255,0.42);
+}
+
+html, body {
+  width: 100%; height: 100%;
+  overflow: hidden;
+  background: var(--bg);
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  color: #fff;
+  user-select: none;
+  touch-action: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+canvas { display: block; }
+
+/* ─── HUD ─────────────────────────────────── */
+
+#hud {
+  position: fixed; top: 0; left: 0; right: 0;
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 10;
+  pointer-events: none;
+}
+#hud.hidden { display: none !important; }
+
+/* Score */
+#score-box {
+  display: flex; flex-direction: column; align-items: center;
+  background: var(--panel);
+  border: 1.5px solid var(--border);
+  border-radius: 14px;
+  padding: 6px 20px;
+  min-width: 86px;
+}
+.label {
+  font-size: 9px;
+  letter-spacing: 3px;
+  font-weight: 700;
+  color: var(--neon);
+}
+#score {
+  font-size: 28px; font-weight: 900;
+  text-shadow: 0 0 12px var(--neon);
+}
+
+/* Avatar */
+#avatar-box {
+  display: flex; flex-direction: column; align-items: center; gap: 5px;
+}
+#avatar {
+  width: 56px; height: 56px; border-radius: 50%;
+  object-fit: cover;
+  border: 2.5px solid var(--neon);
+  box-shadow: 0 0 14px rgba(0,255,255,.55);
+}
+#hearts { display: flex; gap: 3px; font-size: 17px; }
+#hearts span { transition: opacity .3s, filter .3s; }
+
+/* Speed */
+#speed-box {
+  display: flex; flex-direction: column; align-items: center; gap: 5px;
+  background: var(--panel);
+  border: 1.5px solid rgba(255,0,200,.4);
+  border-radius: 14px;
+  padding: 6px 14px;
+  min-width: 86px;
+}
+#speed-box .label { color: var(--neon2); }
+#speed-bar {
+  width: 74px; height: 8px;
+  background: rgba(255,255,255,.1);
+  border-radius: 4px; overflow: hidden;
+}
+#speed-fill {
+  height: 100%; width: 4%;
+  background: linear-gradient(90deg, var(--neon2), #ff4400);
+  border-radius: 4px;
+  transition: width .6s;
+  box-shadow: 0 0 7px rgba(255,0,200,.7);
+}
+
+/* ─── SCREENS ─────────────────────────────── */
+
+.screen {
+  position: fixed; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 16px;
+  background: rgba(5,5,15,.9);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 20;
+}
+.screen.hidden { display: none !important; }
+
+.char-img {
+  width: 145px; height: 145px; border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--neon);
+  box-shadow: 0 0 28px rgba(0,255,255,.55);
+  animation: float 3.4s ease-in-out infinite;
+}
+@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50%      { transform: translateY(-11px); }
+}
+
+h1 {
+  font-size: clamp(28px, 7vw, 50px);
+  font-weight: 900; letter-spacing: 4px;
+  text-shadow: 0 0 18px var(--neon), 0 0 38px var(--neon);
+}
+.over-title {
+  color: #ff4455;
+  text-shadow: 0 0 18px #ff3344, 0 0 38px #ff3344;
+}
+
+.sub {
+  color: #aabbdd; font-size: clamp(13px,3vw,17px);
+  text-align: center; max-width: 420px;
+}
+
+.controls {
+  background: rgba(0,255,255,.07);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 26px; text-align: center;
+  color: #cce; font-size: clamp(11px,2.5vw,14px);
+  line-height: 2.1;
+}
+.mobile-hint { color: var(--dim); font-size: .85em; }
+
+button {
+  background: linear-gradient(135deg, var(--neon), #0077ff);
+  color: #000; border: none;
+  padding: 14px 42px;
+  font-size: clamp(15px,3vw,20px);
+  font-weight: 900; border-radius: 50px; cursor: pointer;
+  letter-spacing: 2px;
+  transition: transform .15s, box-shadow .15s;
+  box-shadow: 0 0 22px rgba(0,255,255,.5);
+}
+button:hover  { transform: scale(1.06); box-shadow: 0 0 32px rgba(0,255,255,.85); }
+button:active { transform: scale(0.93); }
+
+.sc       { font-size: clamp(15px,4vw,21px); color: #dde; }
+.sc.dim   { font-size: clamp(12px,3vw,16px); color: var(--dim); }
+.sc strong { color: var(--neon); text-shadow: 0 0 8px var(--neon); }
+
+/* ─── HIT FLASH ──────────────────────────── */
+body.hit::after {
+  content: '';
+  position: fixed; inset: 0;
+  background: rgba(255,0,0,.28);
+  pointer-events: none; z-index: 50;
+  animation: hitFlash .35s ease forwards;
+}
+@keyframes hitFlash {
+  0%   { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* ─── SPEED LINES (optional decoration) ─── */
+body.fast::before {
+  content: '';
+  position: fixed; inset: 0;
+  background: repeating-linear-gradient(
+    90deg,
+    transparent 0,
+    transparent 98%,
+    rgba(0,255,255,.04) 99%,
+    transparent 100%
+  );
+  pointer-events: none; z-index: 5;
+}
