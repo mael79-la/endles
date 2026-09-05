@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#05050f">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <title>🚂 Train Runner</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+
+  <canvas id="c"></canvas>
+
+  <!-- HUD -->
+  <div id="hud" class="hidden">
+    <div id="score-box">
+      <div class="label">SCORE</div>
+      <div id="score">0</div>
+    </div>
+    <div id="avatar-box">
+      <img id="avatar" src="player.jpg" alt="Player">
+      <div id="hearts">
+        <span>❤️</span><span>❤️</span><span>❤️</span>
+      </div>
+    </div>
+    <div id="speed-box">
+      <div class="label">SPEED</div>
+      <div id="speed-bar"><div id="speed-fill"></div></div>
+    </div>
+  </div>
+
+  <!-- START -->
+  <div id="start" class="screen">
+    <img src="player.jpg" class="char-img" alt="Train Boy">
+    <h1>🚂 TRAIN RUNNER</h1>
+    <p class="sub">¡Esquiva los trenes y no te detengas!</p>
+    <div class="controls">
+      <p>⬅️ ➡️ &nbsp; Cambiar carril &nbsp; | &nbsp; ⬆️ ESPACIO &nbsp; Saltar</p>
+      <p class="mobile-hint">📱 Desliza izquierda / derecha / arriba</p>
+    </div>
+    <button id="btn-start">¡ J U G A R !</button>
+  </div>
+
+  <!-- GAME OVER -->
+  <div id="gameover" class="screen hidden">
+    <h1 class="over-title">💥 GAME OVER</h1>
+    <img src="player.jpg" class="char-img" alt="">
+    <p class="sc">Puntuación: <strong id="final-score">0</strong></p>
+    <p class="sc dim">Récord: <strong id="best-score">0</strong></p>
+    <button id="btn-restart">¡ R E I N T E N T A R !</button>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
